@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# PyTorch
+*.pth
+*.pt
+*.ckpt
+*.pth.tar
+
+# Data directories
+data/
+datasets/
+
+# Results (keep structure, ignore outputs)
+results/tables/*.csv
+results/tables/*.json
+results/figures/*.png
+results/figures/*.pdf
+results/figures/*.svg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Weights & Biases
+wandb/
+
+# TensorBoard
+runs/
+events.out.tfevents.*
+
+# Logs
+*.log
+logs/
+
+# Misc
+*.zip
+*.tar.gz
+*.tar

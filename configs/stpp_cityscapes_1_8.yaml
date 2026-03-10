@@ -1,0 +1,89 @@
+# ST++ Configuration: Cityscapes, 1/8 labeled data
+# Based on: "ST++: Make Self-training Work Better for Semi-supervised Semantic Segmentation" (CVPR 2022)
+
+dataset:
+  name: cityscapes
+  root: data/cityscapes
+  train_list: data/splits/cityscapes/1_8/labeled.txt
+  unlabeled_list: data/splits/cityscapes/1_8/unlabeled.txt
+  val_list: data/splits/cityscapes/val.txt
+  num_classes: 19
+  ignore_index: 255
+  crop_size: 769
+  resize_range: [0.5, 2.0]
+
+model:
+  backbone: resnet101
+  pretrained: true
+  pretrained_path: pretrained/resnet101-imagenet.pth
+  output_stride: 16
+  classifier: DeepLabV3Plus
+  in_channels: 2048
+  low_level_channels: 256
+
+training:
+  # Phase 1: Supervised pre-training
+  phase1:
+    epochs: 100
+    batch_size: 4
+    optimizer: sgd
+    learning_rate: 0.005
+    momentum: 0.9
+    weight_decay: 0.0001
+    lr_scheduler: poly
+    poly_power: 0.9
+
+  # Phase 2: Self-training rounds
+  phase2:
+    num_rounds: 3
+    epochs_per_round: 80
+    batch_size: 4
+    optimizer: sgd
+    learning_rate: 0.002
+    momentum: 0.9
+    weight_decay: 0.0001
+    lr_scheduler: poly
+    poly_power: 0.9
+
+  # ST++ specific
+  semi_supervised:
+    method: stpp
+    confidence_threshold: 0.9
+    selective_retraining:
+      enabled: true
+      reliability_metric: prediction_stability
+      stability_rounds: 2
+      top_k_reliable: 0.5
+    prioritized_pseudo_labeling:
+      enabled: true
+      priority_metric: entropy
+      easy_first: true
+
+augmentation:
+  train:
+    random_horizontal_flip: true
+    random_crop: true
+    random_scale: [0.5, 2.0]
+    color_jitter:
+      brightness: 0.3
+      contrast: 0.3
+      saturation: 0.3
+      hue: 0.1
+
+evaluation:
+  interval: 5
+  sliding_window: true
+  sliding_window_size: 769
+  sliding_window_stride: 513
+  multi_scale: false
+
+output:
+  save_dir: experiments/stpp_cityscapes_1_8
+  save_best: true
+  save_pseudo_labels: true
+  log_interval: 50
+  tensorboard: true
+
+seed: 42
+num_workers: 4
+pin_memory: true

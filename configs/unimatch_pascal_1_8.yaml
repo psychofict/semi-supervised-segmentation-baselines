@@ -1,0 +1,80 @@
+# UniMatch Configuration: Pascal VOC 2012, 1/8 labeled data
+# Based on: "Revisiting Weak-to-Strong Consistency in Semi-Supervised Semantic Segmentation" (CVPR 2023)
+
+dataset:
+  name: pascal_voc
+  root: data/VOCdevkit/VOC2012
+  train_list: data/splits/pascal/1_8/labeled.txt
+  unlabeled_list: data/splits/pascal/1_8/unlabeled.txt
+  val_list: data/splits/pascal/val.txt
+  num_classes: 21
+  ignore_index: 255
+  crop_size: 321
+  resize_range: [0.5, 2.0]
+
+model:
+  backbone: resnet101
+  pretrained: true
+  pretrained_path: pretrained/resnet101-imagenet.pth
+  output_stride: 16
+  classifier: DeepLabV3Plus
+  in_channels: 2048
+  low_level_channels: 256
+
+training:
+  epochs: 200
+  batch_size_labeled: 4
+  batch_size_unlabeled: 4
+  optimizer: sgd
+  learning_rate: 0.001
+  momentum: 0.9
+  weight_decay: 0.0001
+  lr_scheduler: poly
+  poly_power: 0.9
+  warmup_epochs: 5
+
+  # UniMatch specific
+  semi_supervised:
+    method: unimatch
+    confidence_threshold: 0.95
+    feature_perturbation:
+      enabled: true
+      dropout_rate: 0.5
+      feature_noise_std: 0.1
+    image_perturbation:
+      enabled: true
+      color_jitter: 0.5
+      random_grayscale: 0.2
+      gaussian_blur: true
+    consistency_weight: 1.0
+    consistency_rampup_epochs: 30
+
+augmentation:
+  weak:
+    random_horizontal_flip: true
+    random_crop: true
+  strong:
+    color_jitter:
+      brightness: 0.5
+      contrast: 0.5
+      saturation: 0.5
+      hue: 0.25
+    random_grayscale: 0.2
+    gaussian_blur:
+      kernel_size: [3, 7]
+      sigma: [0.1, 2.0]
+
+evaluation:
+  interval: 5
+  sliding_window: false
+  multi_scale: false
+
+output:
+  save_dir: experiments/unimatch_pascal_1_8
+  save_best: true
+  log_interval: 50
+  tensorboard: true
+
+seed: 42
+num_workers: 4
+pin_memory: true
