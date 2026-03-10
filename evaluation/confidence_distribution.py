@@ -1,5 +1,5 @@
 """
-Confidence Distribution and Calibration Analysis for Semi-Supervised Segmentation.
+Confidence Distribution and Calibration Study for Semi-Supervised Segmentation.
 
 Loads model prediction logits/probabilities from UniMatch and ST++, computes
 per-pixel confidence distributions, analyzes calibration via reliability diagrams
@@ -249,7 +249,7 @@ def analyze_method(
     output_dir: str,
     max_samples: int = 500,
 ) -> Tuple[float, np.ndarray, np.ndarray]:
-    """Run full confidence and calibration analysis for one method."""
+    """Run full confidence and calibration evaluation for one method."""
     print(f"\n{'='*60}")
     print(f"Analyzing confidence distribution: {method_name}")
     print(f"{'='*60}")
@@ -341,7 +341,7 @@ def analyze_method(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Confidence distribution and calibration analysis."
+        description="Confidence distribution and calibration evaluation."
     )
     parser.add_argument("--logits_dir", type=str, required=True,
                         help="Directory with .npy logit files (or parent with method subdirs).")
@@ -384,7 +384,7 @@ def main() -> None:
             "Method", class_names, args.output_dir, args.max_samples,
         )
 
-    print("\nCalibration analysis complete.")
+    print("\nCalibration evaluation complete.")
 
 
 if __name__ == "__main__":

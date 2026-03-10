@@ -1,13 +1,13 @@
-# Motivation for CW-BASS: From Baseline Analysis to Boundary-Aware Design
+# Motivation for CW-BASS: From Baseline Evaluation to Boundary-Aware Design
 
 **CW-BASS:** Class-Wise Boundary-Aware Semi-Supervised Segmentation (IJCNN 2025)
 **Authors:** Ebenezer Tarubinga, Seong-Whan Lee
 
 ---
 
-## How Baseline Analysis Informed CW-BASS
+## How Baseline Evaluation Informed CW-BASS
 
-This document details how our systematic analysis of UniMatch and ST++ revealed specific failure patterns that directly motivated each component of CW-BASS.
+This document details how our systematic evaluation of UniMatch and ST++ revealed specific failure patterns that directly motivated each component of CW-BASS.
 
 ---
 
@@ -15,7 +15,7 @@ This document details how our systematic analysis of UniMatch and ST++ revealed 
 
 ### Observation
 
-Using `analysis/boundary_accuracy.py`, we measured prediction accuracy as a function of distance from object boundaries. The results were striking:
+Using `evaluation/boundary_accuracy.py`, we measured prediction accuracy as a function of distance from object boundaries. The results were striking:
 
 | Distance from Boundary | ST++ Accuracy | UniMatch Accuracy |
 |:----------------------:|:------------:|:-----------------:|
@@ -26,7 +26,7 @@ Using `analysis/boundary_accuracy.py`, we measured prediction accuracy as a func
 
 Both methods show a 25-30% accuracy drop at boundaries compared to object interiors. Even UniMatch, which is significantly better than ST++ overall, suffers from this boundary degradation.
 
-### Root Cause Analysis
+### Root Cause Examination
 
 1. **Pseudo-label noise at boundaries**: Object boundaries are inherently ambiguous at the pixel level. Both methods generate noisy pseudo-labels in these regions.
 
@@ -58,7 +58,7 @@ Both methods show a 25-30% accuracy drop at boundaries compared to object interi
 
 ### Observation
 
-Using `analysis/class_imbalance_study.py`, we found that per-class IoU is strongly correlated with class frequency:
+Using `evaluation/class_imbalance_study.py`, we found that per-class IoU is strongly correlated with class frequency:
 
 - **Frequent classes** (person, background): IoU > 85%
 - **Medium classes** (car, cat, dog): IoU 70-80%
@@ -66,7 +66,7 @@ Using `analysis/class_imbalance_study.py`, we found that per-class IoU is strong
 
 The gap between frequent and rare classes is 25-35%, and this gap widens under lower label ratios.
 
-### Root Cause Analysis
+### Root Cause Examination
 
 1. **Fewer training signals for rare classes**: With fewer pixels, rare classes produce fewer pseudo-labels above the confidence threshold.
 
@@ -92,7 +92,7 @@ The gap between frequent and rare classes is 25-35%, and this gap widens under l
 
 ### Observation
 
-Using `analysis/confidence_distribution.py`, we found that both methods are over-confident at boundaries:
+Using `evaluation/confidence_distribution.py`, we found that both methods are over-confident at boundaries:
 
 - The model assigns confidence > 0.9 to 65% of boundary pixels
 - But only 55-60% of those boundary pixels are actually correct
@@ -111,7 +111,7 @@ Using `analysis/confidence_distribution.py`, we found that both methods are over
 
 ### Observation
 
-Using `analysis/convergence_comparison.py`, we found:
+Using `evaluation/convergence_comparison.py`, we found:
 - ST++ pseudo-label quality saturates after ~60 epochs
 - UniMatch continues improving until ~100 epochs but then also plateaus
 - Boundary accuracy specifically stops improving even as interior accuracy continues to grow

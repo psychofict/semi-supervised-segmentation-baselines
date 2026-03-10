@@ -1,9 +1,9 @@
 """
-Boundary Accuracy Analysis for Semi-Supervised Segmentation Baselines.
+Boundary Accuracy Evaluation for Semi-Supervised Segmentation Baselines.
 
 Computes boundary mIoU using trimap-based evaluation, analyzes how prediction
 accuracy degrades near object boundaries, and compares boundary performance
-across methods. This analysis is the KEY motivation for CW-BASS's
+across methods. This evaluation is the KEY motivation for CW-BASS's
 boundary-aware module.
 
 Author: Ebenezer Tarubinga, Korea University
@@ -136,9 +136,9 @@ def analyze_boundary_accuracy(
     max_distance: int,
     method_name: str,
 ) -> Dict:
-    """Run full boundary accuracy analysis for one method."""
+    """Run full boundary accuracy evaluation for one method."""
     print(f"\n{'='*60}")
-    print(f"Boundary accuracy analysis: {method_name}")
+    print(f"Boundary accuracy evaluation: {method_name}")
     print(f"{'='*60}")
 
     pred_path = Path(pred_dir)
@@ -306,7 +306,7 @@ def plot_trimap_comparison(
 
 
 def save_boundary_csv(results_list: List[Dict], trimap_widths: List[int], save_path: str) -> None:
-    """Save boundary analysis results to CSV."""
+    """Save boundary evaluation results to CSV."""
     with open(save_path, "w") as f:
         f.write("method,trimap_width,boundary_miou,interior_miou,gap\n")
         for res in results_list:
@@ -319,7 +319,7 @@ def save_boundary_csv(results_list: List[Dict], trimap_widths: List[int], save_p
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Boundary accuracy analysis for semi-supervised segmentation."
+        description="Boundary accuracy evaluation for semi-supervised segmentation."
     )
     parser.add_argument("--pred_dir", type=str, required=True,
                         help="Prediction directory (or parent with method subdirs if --compare).")
@@ -381,7 +381,7 @@ def main() -> None:
     print("  Both methods show significant boundary degradation,")
     print("  confirming the need for boundary-aware training (CW-BASS).")
     print("=" * 60)
-    print("\nBoundary analysis complete.")
+    print("\nBoundary evaluation complete.")
 
 
 if __name__ == "__main__":

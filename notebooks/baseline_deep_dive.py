@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Semi-Supervised Segmentation Baseline Deep Dive
 #
-# This notebook walks through a comprehensive analysis pipeline comparing
+# This notebook walks through a comprehensive evaluation pipeline comparing
 # UniMatch (CVPR 2023) and ST++ (CVPR 2022) for semi-supervised semantic
 # segmentation. The findings here directly motivated the design of CW-BASS
 # (IJCNN 2025) and FARCLUSS (Neural Networks 2025).
@@ -111,7 +111,7 @@ plt.savefig(str(FIGURES_DIR / "results_comparison_overview.png"), dpi=200, bbox_
 plt.show()
 
 # %% [markdown]
-# ## 3. Improvement Analysis
+# ## 3. Improvement Evaluation
 #
 # Let us quantify how much each method improves over the ST++ baseline and
 # how the gains distribute across label ratios.
@@ -166,9 +166,9 @@ for dataset, data in results.items():
     print(f"  Ratio of gains: {gains_at_low/gains_at_high:.1f}x more improvement at low-label regime")
 
 # %% [markdown]
-# ## 5. Synthetic Analysis: Where Do Pseudo-Labels Fail?
+# ## 5. Synthetic Study: Where Do Pseudo-Labels Fail?
 #
-# To demonstrate the analysis pipeline, we simulate pseudo-label error patterns
+# To demonstrate the evaluation pipeline, we simulate pseudo-label error patterns
 # that match our empirical observations from the actual experiments.
 
 # %%
@@ -265,7 +265,7 @@ for ax in axes.flat:
     ax.set_yticks([])
 
 plt.tight_layout()
-plt.savefig(str(FIGURES_DIR / "synthetic_pseudo_label_analysis.png"), dpi=200, bbox_inches="tight")
+plt.savefig(str(FIGURES_DIR / "synthetic_pseudo_label_study.png"), dpi=200, bbox_inches="tight")
 plt.show()
 
 # %% [markdown]
@@ -327,7 +327,7 @@ print(f"Gap (boundary vs interior): ST++={np.mean(acc_stpp[10:]) - acc_stpp[0]:.
       f"UniMatch={np.mean(acc_uni[10:]) - acc_uni[0]:.3f}")
 
 # %% [markdown]
-# ## 7. Class Frequency vs IoU Analysis
+# ## 7. Class Frequency vs IoU Evaluation
 #
 # Demonstrates that rare classes have systematically lower IoU, motivating
 # FARCLUSS's frequency-adaptive rebalancing.
@@ -421,7 +421,7 @@ plt.show()
 # %% [markdown]
 # ## 9. Summary of Findings
 #
-# This analysis confirms the key observations that motivated our work:
+# This evaluation confirms the key observations that motivated our work:
 #
 # 1. **Boundary degradation** is severe (15-25% accuracy drop) and affects
 #    both methods -- this directly motivated CW-BASS's boundary-aware loss.
@@ -437,7 +437,7 @@ plt.show()
 
 # %%
 print("="*60)
-print("ANALYSIS COMPLETE")
+print("EVALUATION COMPLETE")
 print("="*60)
 print("\nKey takeaways for CW-BASS and FARCLUSS:")
 print("  1. Boundary accuracy drops ~25% within 3px of edges")

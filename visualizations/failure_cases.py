@@ -1,5 +1,5 @@
 """
-Failure Case Analysis for Semi-Supervised Segmentation Baselines.
+Failure Case Examination for Semi-Supervised Segmentation Baselines.
 
 Identifies images where baseline methods fail most severely (lowest IoU),
 categorizes failure modes into boundary errors, rare class confusion, and
@@ -295,7 +295,7 @@ def plot_failure_distribution(
 
     ax2.set_xlabel("Boundary Error Ratio", fontsize=11)
     ax2.set_ylabel("Image mIoU", fontsize=11)
-    ax2.set_title(f"Failure Analysis: {method_name}", fontsize=12, fontweight="bold")
+    ax2.set_title(f"Failure Examination: {method_name}", fontsize=12, fontweight="bold")
     ax2.legend(fontsize=9)
     ax2.grid(alpha=0.3)
 
@@ -306,7 +306,7 @@ def plot_failure_distribution(
 
 
 def save_failures_csv(failures: List[Dict], save_path: str) -> None:
-    """Save failure analysis results to CSV."""
+    """Save failure case results to CSV."""
     with open(save_path, "w") as f:
         f.write("method,filename,miou,boundary_error_ratio,rare_class_error_ratio,"
                 "small_object_ratio,failure_category\n")
@@ -323,7 +323,7 @@ def save_failures_csv(failures: List[Dict], save_path: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Failure case analysis for semi-supervised segmentation baselines."
+        description="Failure case examination for semi-supervised segmentation baselines."
     )
     parser.add_argument("--pred_dir", type=str, required=True,
                         help="Parent dir with method subdirectories.")
@@ -353,7 +353,7 @@ def main() -> None:
             continue
 
         print(f"\n{'='*60}")
-        print(f"Failure case analysis: {method_name}")
+        print(f"Failure case examination: {method_name}")
         print(f"{'='*60}")
 
         failures = analyze_failures(
@@ -395,7 +395,7 @@ def main() -> None:
         )
 
     print(f"\n{'='*60}")
-    print("FAILURE ANALYSIS SUMMARY:")
+    print("FAILURE CASE SUMMARY:")
     for method_name in methods:
         method_failures = [f for f in all_failures if f["method"] == method_name]
         if method_failures:
@@ -404,7 +404,7 @@ def main() -> None:
             for cat in sorted(set(cats)):
                 print(f"    {cat}: {cats.count(cat)} ({cats.count(cat)/len(cats):.0%})")
     print("=" * 60)
-    print("\nFailure case analysis complete.")
+    print("\nFailure case examination complete.")
 
 
 if __name__ == "__main__":

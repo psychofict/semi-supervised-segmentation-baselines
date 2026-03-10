@@ -1,5 +1,5 @@
 """
-Confidence Threshold Sensitivity Analysis for Semi-Supervised Segmentation.
+Confidence Threshold Sensitivity Study for Semi-Supervised Segmentation.
 
 Sweeps confidence thresholds from 0.5 to 0.99 and analyzes how the threshold
 affects pseudo-label retention rate, quality (accuracy of retained labels),
@@ -299,7 +299,7 @@ def save_threshold_csv(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Confidence threshold sensitivity analysis."
+        description="Confidence threshold sensitivity study."
     )
     parser.add_argument("--logits_dir", type=str, required=True,
                         help="Directory with .npy logit files (or parent with method subdirs).")
@@ -336,7 +336,7 @@ def main() -> None:
             logits_path = args.logits_dir
 
         print(f"\n{'='*60}")
-        print(f"Threshold sensitivity analysis: {method_name}")
+        print(f"Threshold sensitivity study: {method_name}")
         print(f"{'='*60}")
 
         results = threshold_sweep(
@@ -375,7 +375,7 @@ def main() -> None:
     print("  pseudo-labels at high thresholds. CW-BASS addresses this with dynamic,")
     print("  class-aware and spatially-aware thresholding.")
     print("=" * 60)
-    print("\nThreshold sensitivity analysis complete.")
+    print("\nThreshold sensitivity study complete.")
 
 
 if __name__ == "__main__":

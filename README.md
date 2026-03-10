@@ -1,4 +1,4 @@
-# Semi-Supervised Semantic Segmentation: Baseline Analysis
+# Semi-Supervised Semantic Segmentation: Baseline Evaluation
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -11,7 +11,7 @@
 
 ## Context
 
-This repository contains a comprehensive analysis of two leading semi-supervised semantic segmentation baselines: **UniMatch** (Yang et al., CVPR 2023) and **ST++** (Yang et al., CVPR 2022). The systematic investigation of their strengths and limitations directly informed the development of our own methods:
+This repository contains a comprehensive evaluation of two leading semi-supervised semantic segmentation baselines: **UniMatch** (Yang et al., CVPR 2023) and **ST++** (Yang et al., CVPR 2022). The systematic investigation of their strengths and limitations directly informed the development of our own methods:
 
 - **CW-BASS**: Class-Wise Boundary-Aware Semi-Supervised Segmentation (IJCNN 2025)
 - **FARCLUSS**: Frequency-Adaptive Rare-Class Learning for Unified Semi-Supervised Segmentation (Neural Networks 2025)
@@ -37,8 +37,8 @@ By rigorously analyzing where and why these baselines fail, we identified the pr
 1. **Boundary pseudo-label accuracy drops by 15--25%** compared to interior pixels (within a 5-pixel trimap), confirming the need for boundary-aware training.
 2. **Rare classes (< 2% of pixels) show 20--30% lower IoU** than frequent classes, with the gap widening under lower label ratios.
 3. **UniMatch's dual perturbation improves calibration** (ECE reduced by ~35% vs. ST++), but calibration degrades on boundary pixels for both.
-4. **Convergence analysis** reveals that ST++ pseudo-label quality saturates earlier (~60 epochs) than UniMatch (~100 epochs), suggesting diminishing returns from simple self-training.
-5. **Confidence threshold sensitivity** analysis shows a narrow optimal range (0.90--0.95) for both methods; CW-BASS's dynamic thresholding removes this sensitivity.
+4. **Convergence evaluation** reveals that ST++ pseudo-label quality saturates earlier (~60 epochs) than UniMatch (~100 epochs), suggesting diminishing returns from simple self-training.
+5. **Confidence threshold sensitivity** study shows a narrow optimal range (0.90--0.95) for both methods; CW-BASS's dynamic thresholding removes this sensitivity.
 6. **Failure cases cluster** around small objects, thin structures, and class-ambiguous boundaries -- exactly the scenarios our methods target.
 
 ---
@@ -73,25 +73,25 @@ semi-supervised-segmentation-baselines/
 ├── LICENSE
 ├── requirements.txt
 ├── .gitignore
-├── analysis/
-│   ├── pseudo_label_quality.py       # Pseudo-label accuracy analysis
+├── evaluation/
+│   ├── pseudo_label_quality.py       # Pseudo-label accuracy evaluation
 │   ├── confidence_distribution.py    # Calibration and confidence study
 │   ├── boundary_accuracy.py          # Boundary mIoU evaluation
-│   ├── class_imbalance_study.py      # Class frequency vs. IoU analysis
+│   ├── class_imbalance_study.py      # Class frequency vs. IoU study
 │   ├── convergence_comparison.py     # Training curve comparison
-│   └── ablation_threshold_sensitivity.py  # Threshold sweep analysis
+│   └── ablation_threshold_sensitivity.py  # Threshold sweep study
 ├── visualizations/
 │   ├── compare_predictions.py        # Side-by-side prediction grids
 │   ├── entropy_maps.py              # Entropy heatmap overlays
 │   ├── per_class_iou_radar.py       # Radar charts for per-class IoU
-│   └── failure_case_analysis.py     # Failure mode categorization
+│   └── failure_cases.py             # Failure mode categorization
 ├── configs/
 │   ├── unimatch_pascal_1_8.yaml
 │   ├── unimatch_cityscapes_1_8.yaml
 │   ├── stpp_pascal_1_8.yaml
 │   └── stpp_cityscapes_1_8.yaml
 ├── notebooks/
-│   └── baseline_deep_dive.py        # Notebook-style analysis walkthrough
+│   └── baseline_deep_dive.py        # Notebook-style evaluation walkthrough
 ├── docs/
 │   ├── UNIMATCH_NOTES.md
 │   ├── STPP_NOTES.md
@@ -127,37 +127,37 @@ pip install -r requirements.txt
 ### Running Analyses
 
 ```bash
-# Pseudo-label quality analysis
-python analysis/pseudo_label_quality.py \
+# Pseudo-label quality evaluation
+python evaluation/pseudo_label_quality.py \
     --pred_dir data/predictions/unimatch/pseudo_labels \
     --gt_dir data/VOCdevkit/VOC2012/SegmentationClass \
     --num_classes 21 --output_dir results
 
-# Confidence distribution analysis
-python analysis/confidence_distribution.py \
+# Confidence distribution evaluation
+python evaluation/confidence_distribution.py \
     --logits_dir data/predictions/unimatch/logits \
     --gt_dir data/VOCdevkit/VOC2012/SegmentationClass \
     --num_classes 21 --output_dir results
 
-# Boundary accuracy analysis
-python analysis/boundary_accuracy.py \
+# Boundary accuracy evaluation
+python evaluation/boundary_accuracy.py \
     --pred_dir data/predictions/unimatch/pseudo_labels \
     --gt_dir data/VOCdevkit/VOC2012/SegmentationClass \
     --num_classes 21 --trimap_width 5 --output_dir results
 
 # Class imbalance study
-python analysis/class_imbalance_study.py \
+python evaluation/class_imbalance_study.py \
     --pred_dir data/predictions \
     --gt_dir data/VOCdevkit/VOC2012/SegmentationClass \
     --num_classes 21 --output_dir results
 
 # Convergence comparison
-python analysis/convergence_comparison.py \
+python evaluation/convergence_comparison.py \
     --log_dir data/training_logs \
     --output_dir results
 
 # Threshold sensitivity ablation
-python analysis/ablation_threshold_sensitivity.py \
+python evaluation/ablation_threshold_sensitivity.py \
     --logits_dir data/predictions/unimatch/logits \
     --gt_dir data/VOCdevkit/VOC2012/SegmentationClass \
     --num_classes 21 --output_dir results

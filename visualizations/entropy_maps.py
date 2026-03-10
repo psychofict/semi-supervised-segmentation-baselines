@@ -95,7 +95,7 @@ def create_entropy_overlay(
     return np.clip(overlay, 0, 255).astype(np.uint8)
 
 
-def plot_single_entropy_analysis(
+def plot_single_entropy_examination(
     image: np.ndarray,
     entropy: np.ndarray,
     gt: Optional[np.ndarray],
@@ -103,7 +103,7 @@ def plot_single_entropy_analysis(
     title: str,
     save_path: str,
 ) -> None:
-    """Create a comprehensive single-image entropy analysis figure."""
+    """Create a comprehensive single-image entropy examination figure."""
     fig, axes = plt.subplots(2, 2, figsize=(14, 12))
 
     # Top-left: Original image
@@ -234,7 +234,7 @@ def plot_entropy_vs_error(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Prediction entropy map visualization and analysis."
+        description="Prediction entropy map visualization and evaluation."
     )
     parser.add_argument("--image_dir", type=str, required=True,
                         help="Directory with input images.")
@@ -284,9 +284,9 @@ def main() -> None:
         if len(entropy_dict) == 1:
             method_name = list(entropy_dict.keys())[0]
             entropy = list(entropy_dict.values())[0]
-            plot_single_entropy_analysis(
+            plot_single_entropy_examination(
                 image, entropy, gt, None,
-                f"Entropy Analysis: {stem}",
+                f"Entropy Examination: {stem}",
                 os.path.join(args.output_dir, f"entropy_{stem}.png"),
             )
         elif len(entropy_dict) > 1:
@@ -296,7 +296,7 @@ def main() -> None:
                 os.path.join(args.output_dir, f"entropy_comparison_{stem}.png"),
             )
 
-    # Aggregate entropy-error analysis if GT available
+    # Aggregate entropy-error evaluation if GT available
     if args.gt_dir and len(methods) > 0:
         for method_label, subdir in methods.items():
             all_entropy: List[np.ndarray] = []

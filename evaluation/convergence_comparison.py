@@ -255,7 +255,7 @@ def plot_convergence_speed(
     print(f"  Saved convergence speed plot to {save_path}")
 
 
-def plot_saturation_analysis(
+def plot_saturation_study(
     methods_data: Dict[str, Dict[str, np.ndarray]],
     metric: str,
     save_path: str,
@@ -302,7 +302,7 @@ def plot_saturation_analysis(
     plt.tight_layout()
     fig.savefig(save_path, dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved saturation analysis to {save_path}")
+    print(f"  Saved saturation study to {save_path}")
 
 
 def main() -> None:
@@ -392,14 +392,14 @@ def main() -> None:
             save_path=os.path.join(fig_dir, "convergence_speed.png"),
         )
 
-    # Saturation analysis
+    # Saturation study
     if any("pseudo_label_acc" in d for d in methods_data.values()):
-        plot_saturation_analysis(
+        plot_saturation_study(
             methods_data, "pseudo_label_acc",
             os.path.join(fig_dir, "pseudo_label_saturation.png"),
         )
 
-    print("\nConvergence analysis complete.")
+    print("\nConvergence evaluation complete.")
 
 
 if __name__ == "__main__":

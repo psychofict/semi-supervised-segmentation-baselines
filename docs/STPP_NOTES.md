@@ -77,7 +77,7 @@ Where pseudo-labeled loss only includes pixels with confidence above threshold (
 - 3 self-training rounds total
 - Each round restarts the learning rate schedule
 
-## Strengths (Observed in Our Analysis)
+## Strengths (Observed in Our Evaluation)
 
 1. **Conceptual simplicity**: The self-training framework is straightforward and modular. Each component (pseudo-labeling, reliability estimation, curriculum) can be analyzed independently.
 
@@ -87,7 +87,7 @@ Where pseudo-labeled loss only includes pixels with confidence above threshold (
 
 4. **Decoupled pseudo-label generation**: Because pseudo-labels are generated offline (not online), they can be analyzed, visualized, and debugged separately from training.
 
-## Weaknesses (Identified in Our Analysis)
+## Weaknesses (Identified in Our Evaluation)
 
 1. **Coarse reliability estimation**: Image-level reliability misses pixel-level variation. An image might be classified as "reliable" overall but have very poor pseudo-labels near object boundaries.
 
@@ -95,7 +95,7 @@ Where pseudo-labeled loss only includes pixels with confidence above threshold (
 
 3. **Pseudo-label staleness**: Within a round, pseudo-labels are fixed. As the model improves during training, the pseudo-labels become increasingly stale and potentially limit learning.
 
-4. **Slower convergence**: Our convergence analysis shows ST++ pseudo-label quality saturates earlier (~60 epochs) than UniMatch (~100 epochs), suggesting the discrete rounds create a ceiling effect.
+4. **Slower convergence**: Our convergence evaluation shows ST++ pseudo-label quality saturates earlier (~60 epochs) than UniMatch (~100 epochs), suggesting the discrete rounds create a ceiling effect.
 
 5. **Fixed confidence threshold**: The 0.9 threshold is applied uniformly across all classes and spatial locations, leading to:
    - Rare classes losing most of their pseudo-labels
@@ -105,7 +105,7 @@ Where pseudo-labeled loss only includes pixels with confidence above threshold (
 
 ## Relevance to CW-BASS
 
-The discrete pseudo-labeling rounds in ST++ provided a clear experimental framework for studying how pseudo-label quality evolves over training. Our analysis of ST++ pseudo-labels across rounds revealed:
+The discrete pseudo-labeling rounds in ST++ provided a clear experimental framework for studying how pseudo-label quality evolves over training. Our evaluation of ST++ pseudo-labels across rounds revealed:
 
 - **Round 1 -> Round 2**: Boundary accuracy improves slightly (+2-3%), but rare class accuracy often degrades (-5-8%) due to confirmation bias
 - **Round 2 -> Round 3**: Marginal improvements overall, suggesting diminishing returns from additional rounds
@@ -118,7 +118,7 @@ These observations motivated CW-BASS's:
 
 ## Relevance to FARCLUSS
 
-The class-level analysis of ST++ revealed severe frequency bias:
+The class-level evaluation of ST++ revealed severe frequency bias:
 - After reliability filtering, rare classes had 40-60% fewer pseudo-labeled pixels than frequent classes
 - This bias compounds across rounds: fewer pseudo-labels -> worse model for that class -> even fewer pseudo-labels next round
 - The easy-to-hard curriculum exacerbates this because rare-class images tend to have lower reliability scores

@@ -63,7 +63,7 @@ Pseudo-labels are generated from the weakly-augmented view:
 - Consistency weight: ramped up from 0 to 1.0 over first 30 epochs
 - No EMA teacher by default (the model generates its own pseudo-labels from the weak view)
 
-## Strengths (Observed in Our Analysis)
+## Strengths (Observed in Our Evaluation)
 
 1. **Better calibration**: The dual-stream consistency regularization produces better-calibrated probabilities compared to ST++ (ECE reduced by ~35%).
 
@@ -73,9 +73,9 @@ Pseudo-labels are generated from the weakly-augmented view:
 
 4. **Single-stage training**: No need for multiple training phases or pseudo-label regeneration rounds.
 
-## Weaknesses (Identified in Our Analysis)
+## Weaknesses (Identified in Our Evaluation)
 
-1. **Boundary-agnostic**: The confidence threshold is uniform across all pixel locations. Our boundary analysis shows that boundary pixels have systematically lower accuracy even when confidence is high (over-confident at boundaries).
+1. **Boundary-agnostic**: The confidence threshold is uniform across all pixel locations. Our boundary evaluation shows that boundary pixels have systematically lower accuracy even when confidence is high (over-confident at boundaries).
 
 2. **Class-agnostic thresholding**: The 0.95 threshold treats all classes equally. Rare classes rarely exceed this threshold, leading to fewer training signals for already under-represented categories.
 
@@ -85,14 +85,14 @@ Pseudo-labels are generated from the weakly-augmented view:
 
 ## Relevance to CW-BASS
 
-Our boundary accuracy analysis showed that UniMatch's predictions degrade by 15-20% within a 5-pixel trimap of object boundaries. This directly motivated CW-BASS's:
+Our boundary accuracy evaluation showed that UniMatch's predictions degrade by 15-20% within a 5-pixel trimap of object boundaries. This directly motivated CW-BASS's:
 - **Boundary-aware loss weighting**: Higher loss weight for boundary pixels
 - **Spatially-adaptive thresholding**: Lower confidence threshold near boundaries to retain more training signals
 - **Boundary prediction head**: Auxiliary boundary detection task to improve boundary representation
 
 ## Relevance to FARCLUSS
 
-The per-class confidence analysis revealed that rare classes (bicycle, potted plant, dining table) have 20-30% fewer pseudo-labels retained after thresholding. This motivated FARCLUSS's:
+The per-class confidence evaluation revealed that rare classes (bicycle, potted plant, dining table) have 20-30% fewer pseudo-labels retained after thresholding. This motivated FARCLUSS's:
 - **Frequency-adaptive sampling**: Over-sample images containing rare classes
 - **Class-balanced confidence thresholds**: Lower thresholds for rare classes
 - **Contrastive learning**: Class-balanced contrastive loss to improve feature discrimination for rare classes
