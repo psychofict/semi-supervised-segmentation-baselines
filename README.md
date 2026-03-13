@@ -2,10 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Systematic Study of UniMatch (CVPR 2023) and ST++ (CVPR 2022)**
-
-*Ebenezer Tarubinga, M.Sc. Artificial Intelligence, Korea University*
-*Supervised by Prof. Seong-Whan Lee*
+**Systematic Study of UniMatch (CVPR 2023), ST++ (CVPR 2022) and CW-BASS (IJCNN 2025)**
 
 ---
 
@@ -52,7 +49,7 @@ By rigorously analyzing where and why these baselines fail, we identified the pr
 | ST++ (CVPR 2022) | 65.2 | 71.0 | 74.6 | 77.3 |
 | UniMatch (CVPR 2023) | 75.2 | 76.6 | 77.2 | 78.8 |
 | **CW-BASS (IJCNN 2025)** | **76.1** | **77.5** | **78.0** | **79.4** |
-| **FARCLUSS (Neural Networks 2025)** | **78.2** | **79.0** | **79.8** | **80.3** |
+| **FARCLUSS (Neural Networks 2026)** | **78.2** | **79.0** | **79.8** | **80.3** |
 
 ### Cityscapes (mIoU %)
 
@@ -61,7 +58,7 @@ By rigorously analyzing where and why these baselines fail, we identified the pr
 | ST++ (CVPR 2022) | 67.4 | 72.2 | 74.4 | 77.0 |
 | UniMatch (CVPR 2023) | 76.6 | 77.2 | 78.6 | 79.5 |
 | **CW-BASS (IJCNN 2025)** | **77.3** | **78.1** | **79.2** | **80.1** |
-| **FARCLUSS (Neural Networks 2025)** | **78.8** | **79.5** | **80.5** | **81.0** |
+| **FARCLUSS (Neural Networks 2026)** | **78.8** | **79.5** | **80.5** | **81.0** |
 
 ---
 
@@ -107,7 +104,7 @@ semi-supervised-segmentation-baselines/
 
 ```bash
 # Clone the repository
-git clone https://github.com/etarubinga/semi-supervised-segmentation-baselines.git
+git clone https://github.com/psychofict/semi-supervised-segmentation-baselines.git
 cd semi-supervised-segmentation-baselines
 
 # Create a virtual environment
@@ -172,8 +169,6 @@ We gratefully acknowledge the original authors of the baseline methods:
 - **UniMatch**: Lihe Yang, Lei Qi, Litong Feng, Wayne Zhang, Yinghuan Shi (CVPR 2023) -- for pioneering the unified dual-stream perturbation framework.
 - **ST++**: Lihe Yang, Wei Zhuo, Lei Qi, Yinghuan Shi, Yang Gao (CVPR 2022) -- for the selective re-training strategy with prioritized pseudo-labels.
 
-This work was conducted at the Department of Artificial Intelligence, Korea University, under the supervision of Prof. Seong-Whan Lee.
-
 ---
 
 ## Citations
@@ -196,17 +191,17 @@ This work was conducted at the Department of Artificial Intelligence, Korea Univ
 }
 
 @inproceedings{tarubinga2025cwbass,
-  title={CW-BASS: Class-Wise Boundary-Aware Semi-Supervised Segmentation},
-  author={Tarubinga, Ebenezer and Lee, Seong-Whan},
+  title={CW-BASS: Confidence-Based Boundary-Aware Semi-Supervised Segmentation},
+  author={Tarubinga, Ebenezer and Kalafatovich, Jenifer and Lee, Seong-Whan},
   booktitle={Proceedings of the International Joint Conference on Neural Networks (IJCNN)},
   year={2025}
 }
 
 @article{tarubinga2025farcluss,
   title={FARCLUSS: Frequency-Adaptive Rare-Class Learning for Unified Semi-Supervised Segmentation},
-  author={Tarubinga, Ebenezer and Lee, Seong-Whan},
+  author={Tarubinga, Ebenezer and Kalafatovich, Jenifer and Lee, Seong-Whan},
   journal={Neural Networks},
-  year={2025}
+  year={2026}
 }
 ```
 
